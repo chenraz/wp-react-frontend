@@ -10,8 +10,20 @@ import Config from '../config';
 
 
 import {Block} from '@tilnet/react-components';
+import WPGBlocks from 'react-gutenberg';
+
+// import GetCustomBlock from '../local-react-components';
+import {GetCustomBlock} from '../local-react-components';
+import {MouseContext} from '../local-react-components/elements/mouseNavigation'
+
+import loadable from '@loadable/component';
+
+// const Wellcome = loadable(() => import('./wellcome'));
+
+// console.log('testing now');
 
 var apiRootJSON = require( '../utils/wp-json.json' );
+
 
 
 const wp = new WPAPI({ 
@@ -34,14 +46,12 @@ const tokenExpired = () => {
 
 const PageConent = (props) => {
 
+  // console.log ('pageContent', props);
   const {content} = props;
 
-  useEffect(() => {
-     ReactDOM.render (
-      <Block test="working" />
-      , document.querySelector('#get-my-block')
-    ); 
-  });
+  const myBlocks = {Block};
+  const blockName = "Block";
+  const Type = myBlocks[blockName];
 
   return (
     <div
@@ -61,17 +71,16 @@ class Index extends Component {
 
   static async getInitialProps() {
     try {
-      const [page] = await Promise.all(
-        [
+      const page = await 
           wp
-          .pages()
-          .slug('welcome')
-          .then((pages) => {
-              return pages[0];
-          })
-        ]
-      );
-      return {page};
+            .pages()
+            .slug('welcome')
+            .then((pages) => {
+              // console.log ('the page: ', pages[0]);
+              return pages[0]; 
+            });
+
+      return {page};      
 
     } catch (err) {
       console.log('err',err);
@@ -105,6 +114,11 @@ class Index extends Component {
     const { id } = this.state;
     const { headerMenu, page } = this.props;
 
+    const Blocks = ({blocks}) => (
+      <MouseContext>
+            <WPGBlocks blocks={blocks} mapToBlock={GetCustomBlock} />        
+      </MouseContext>  
+    );
 
     return (
       <Layout>
@@ -119,7 +133,11 @@ class Index extends Component {
 
         <PageConent content = {page.content.rendered} />
 
-        <h2>My sepcific block:</h2>
+        <h2>Trying WPGBlocks</h2>
+        {/* <WPGBlocks blocks={page.blocks} mapToBlock={GetCustomBlock} />         */}
+        <Blocks blocks={page.blocks} />        
+
+        <h2>My sepcific block2:</h2>
         <Block test="can be changed dynamically"/>
 
         {id ? (

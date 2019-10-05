@@ -1,0 +1,24 @@
+
+
+@import "vars.scss";
+@import "mixins.scss";
+
+
+@include text-colors($colors);
+@include accent-colors($colors);
+@include background-colors($colors);
+
+/* Gradients */
+.has-radial-blue-background-color {
+    @extend %radial-blue;
+}
+.has-radial-yellow-background-color {
+    @extend %radial-yellow;
+}
+
+
+
+
+
+
+

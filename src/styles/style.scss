@@ -1,17 +1,17 @@
-@import 'theme-colors';
+// @import 'theme-colors';
+@import 'site-settings';
 $theme-font: 100% verdana, sans-serif;
 
 body {
+  direction: $direction;
   font: $theme-font;
-  background-color: $themeColor-Light;
-  h1,
+  // background-color: $themeColor-Light;
   h2 {
-    color: $themeColor-Dark;
+    font-size: 60px;
   }
-}
-
-.input-padding {
-  padding: 10px;
+  h3 {
+    font-size: 30px;
+  }
 }
 
 .login {
@@ -24,15 +24,12 @@ body {
   }
 }
 
-@import '_colors.scss';
-@import '_breakpoints.scss';
-@import '_variables.scss';
-@import '_mixins.scss';
+// @import '_colors.scss';
+// @import 'color/colors.s'
+@import '../../local-react-components/style/colors/colors.scss';
+// @import '_breakpoints.scss';
+// @import '_variables.scss';
+// @import '_mixins.scss';
 
-// @import '../../node_modules/@wordpress/block-library/src/columns/style.scss';
-// @import '../../node_modules/@wordpress/block-library/src/button/style.scss';
 
-@import '@wordpress/block-library/src/columns/style.scss';
-@import '@wordpress/block-library/src/button/style.scss';
 
-// @import '../../node_modules/@wor'

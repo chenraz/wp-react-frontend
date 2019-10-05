@@ -1,0 +1,70 @@
+
+/*
+    Created on : 23 Sep 2019, 17:28:37
+    Author     : chen
+*/
+
+@import "vars.scss";
+
+%radial-yellow {
+    background: radial-gradient(#fedd56, #fcc73a)!important;
+}
+
+%radial-blue {
+     background: radial-gradient(#02456d, #023e62)!important;
+}
+
+/**
+Accent Colors
+**/
+@mixin accent-color ($name, $color) {
+    .has-#{$name}-accent-color {
+        .active,
+        a,
+        .use-accent-color {
+            color: $color;
+        }
+    }
+}
+
+@mixin accent-colors ($colors) {
+    @each $name, $color in $colors {
+        @include accent-color($name,$color);
+    }
+}
+
+/**
+Text Colors
+**/
+
+@mixin text-color ($name, $color) {
+    .has-#{$name}-text-color {
+        color: $color;
+        fill: $color;
+    }
+}
+
+@mixin text-colors ($colors) {
+    @each $name, $color in $colors {
+        @include text-color($name,$color);
+    }
+}
+
+/**
+Background Colors
+**/
+
+@mixin background-color ($name, $color) {
+    .has-#{$name}-background-color {
+        background-color: $color;
+    }
+}
+
+@mixin background-colors ($colors) {
+    @each $name, $color in $colors {
+        @include background-color($name,$color);
+    }
+}
+
+
+

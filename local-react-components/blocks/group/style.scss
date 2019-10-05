@@ -1,0 +1,11 @@
+.wp-block-group {  
+    &.full-page {
+        width: 100%;
+        min-height: 100vh;
+        position: relative;
+        box-sizing: border-box;
+    }
+    &.has-vetical-header {
+        padding-right: 12%;
+    }
+}
