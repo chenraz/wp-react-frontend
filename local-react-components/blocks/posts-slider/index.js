@@ -9,10 +9,11 @@ import WPGBlocks from 'react-gutenberg';
  * Internals
  */
 import attsSchema from'./attributes.js';
-import Slider from '../../elements/slider';
+import Slider from './slider';
 import {useCustomPosts,useCustomTerms} from '../../utils/resolvers';
 import {defaultAtts} from '../../utils/utils';
-import  './style.scss';
+import withMouseNavigation from '../../components/mouseNavigation';
+
 
 /**
  * 
@@ -24,23 +25,27 @@ const PostsSlider = (props) => {
     
     const exerptEl = useRef(null);    
 
-    // const {allowedNavigation} = props;
-
     return (
         <Slider {...props} {...attributes} exerptEl={exerptEl} Block={WPGBlocks} />
 
     );   
 }
 
+const withNavigation = withMouseNavigation(PostsSlider);
+
 /**
  * Compose React Hooks
  */
 const sliderWithHooks = flowRight ([
-    PostsSlider,
+    withNavigation,
     useCustomTerms,
     useCustomPosts,
 ]);
 
-export default sliderWithHooks;
+export {
+    sliderWithHooks as default,
+    Slider,
+}
+
 
 

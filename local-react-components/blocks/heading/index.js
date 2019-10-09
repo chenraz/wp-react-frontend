@@ -8,7 +8,8 @@ import React from 'react';
  */
 import {defaultAtts} from '../../utils/utils';
 import attsSchema from'./attributes.js';
-import Heading from '../../elements/heading';
+import Heading from './verticalHeading';
+import useVertical from './useVertical';
 
 
 export default (props) => {
@@ -19,4 +20,6 @@ export default (props) => {
         <Heading {...props} attributes={attributes}/>
     );
 }
+
+export {useVertical};
 

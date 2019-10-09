@@ -7,7 +7,6 @@
  */
 import React, {useState} from 'react';
 import classNames from 'classnames';
-import {flowRight} from 'lodash';
 
 /**
  * 
@@ -15,9 +14,7 @@ import {flowRight} from 'lodash';
  */
 import {getPostTerm, getPostKeyByTerm} from '../../utils/selectors';
 import LeftArrow from './leftArrow';
-// import withMouseNavigation from '../withMouseNavigation';
-import withMouseNavigation from '../mouseNavigation';
-// import { compose } from 'redux';
+import  './style.scss';
 
 /**
  * 
@@ -25,19 +22,19 @@ import withMouseNavigation from '../mouseNavigation';
  */
 const Slider = (props) => {
 
-    console.log ('the slider props',props);
-    
-    const {className,sliderPosts,sliderTerms, taxonomy,exerptEl,horizontalHover,contentLayout,showExcerpt,showThumbnail,showTitle} = props;
+    const {className,sliderPosts,sliderTerms, taxonomy,exerptEl,horizontalHover,setHorizontalHover,contentLayout,showExcerpt,showThumbnail,showTitle} = props;
 
     const [currentSlide,setCurrentSlide] = useState(0);
     
     const currentTerm   = taxonomy && sliderPosts && getPostTerm (sliderPosts[currentSlide],taxonomy)
     
     const goRight = ()  => {
+        setHorizontalHover(null);
         setCurrentSlide(((currentSlide + 1) >= sliderPosts.length) ? 0 : currentSlide + 1);
     } 
 
     const goLeft = ()  => {
+        setHorizontalHover(null);
         setCurrentSlide((0>=currentSlide) ? (sliderPosts.length - 1) : (currentSlide -1));
     } 
     
@@ -54,7 +51,6 @@ const Slider = (props) => {
             
         }
         goRight();
-        console.log ('navigate: ', arguments);
     }
 
     const termsControl = sliderTerms && (
@@ -72,23 +68,17 @@ const Slider = (props) => {
     
     return (
         <div className={className} onClick={navigate}>
-           
-            <button onClick={goRight}>+</button>
-            <button onClick={goLeft}>-</button>
             
             {termsControl}
 
             <div className='excerpt-portal use-accent-color' ref={exerptEl} />
-                {React.Children.toArray(props.children)[currentSlide]}
+
+            {React.Children.toArray(props.children)[currentSlide]}
+
         </div>
     );   
 }
 
 export default Slider;
-// const ComposedSlider = flowRight([
-//     withMouseNavigation
-// ])(Slider);
-// const ComposedSlider = withMouseNavigation(Slider);
 
-// export default ComposedSlider;
 

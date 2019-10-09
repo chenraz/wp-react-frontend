@@ -8,7 +8,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {isUndefined, isEmpty} from 'lodash';
-import classNames from 'classnames';
 
 /**
  * Internals

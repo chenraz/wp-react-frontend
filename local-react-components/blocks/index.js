@@ -12,10 +12,8 @@ export default function GetCustomBlock(name) {
     case 'core/group': return Group
     case 'core/heading': return Heading
     case '':
-        // console.log('reusable?');
         break;
     default: 
-      // console.log('got the default for : ' + name);
       return null
   }
 }

@@ -7,8 +7,7 @@ import WPGBlocks from 'react-gutenberg';
  * Internals
  */
 import GetCustomBlock from '../index';
-import './style.scss';
-import Group from '../../elements/group';
+import Group,{GroupPropsContext} from './group';
 
 const GroupWarp = (props) => {
     
@@ -22,5 +21,9 @@ const GroupWarp = (props) => {
  
 }
 
-export default GroupWarp;
+export {
+     GroupWarp as default,
+     Group,
+     GroupPropsContext
+};
 

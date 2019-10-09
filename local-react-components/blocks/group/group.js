@@ -12,6 +12,7 @@ import classNames from 'classnames/dedupe';
  */
 import GroupWithContext,{GroupPropsContext} from './groupWithContext';
 import {getBaseClassName} from '../../utils/selectors';
+import './style.scss';
 
 /**
  * Group

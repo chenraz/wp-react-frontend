@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Link from 'next/link';
 import Router from 'next/router';
 import WPAPI from 'wpapi';
+
+import { withRedux } from '../local-react-components/store/withRedux';
 import Layout from '../components/Layout';
 import PageWrapper from '../components/PageWrapper';
 import Menu from '../components/Menu';
@@ -13,9 +15,9 @@ import {Block} from '@tilnet/react-components';
 import WPGBlocks from 'react-gutenberg';
 
 // import GetCustomBlock from '../local-react-components';
-import {GetCustomBlock} from '../local-react-components';
-import {MouseContext} from '../local-react-components/elements/mouseNavigation'
-
+import GetCustomBlock from '../local-react-components/blocks';
+// import {MouseContext} from '../local-react-components/elements/mouseNavigation'
+import {MouseContext} from '../local-react-components/components/mouseNavigation';
 import loadable from '@loadable/component';
 
 // const Wellcome = loadable(() => import('./wellcome'));
@@ -168,4 +170,4 @@ class Index extends Component {
   }
 }
 
-export default PageWrapper(Index);
+export default withRedux(PageWrapper(Index));
