@@ -20,7 +20,7 @@ import  './style.scss';
  * 
  * @param {*} props 
  */
-const Slider = (props) => {
+const Slides = (props) => {
 
     const {className,sliderPosts,sliderTerms, taxonomy,exerptEl,horizontalHover,setHorizontalHover,contentLayout,showExcerpt,showThumbnail,showTitle} = props;
 
@@ -29,12 +29,12 @@ const Slider = (props) => {
     const currentTerm   = taxonomy && sliderPosts && getPostTerm (sliderPosts[currentSlide],taxonomy)
     
     const goRight = ()  => {
-        setHorizontalHover(null);
+        // setHorizontalHover(null);
         setCurrentSlide(((currentSlide + 1) >= sliderPosts.length) ? 0 : currentSlide + 1);
     } 
 
     const goLeft = ()  => {
-        setHorizontalHover(null);
+        // setHorizontalHover(null);
         setCurrentSlide((0>=currentSlide) ? (sliderPosts.length - 1) : (currentSlide -1));
     } 
     
@@ -79,6 +79,6 @@ const Slider = (props) => {
     );   
 }
 
-export default Slider;
+export default Slides;
 
 

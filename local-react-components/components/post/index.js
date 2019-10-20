@@ -21,7 +21,12 @@ const Post = ({post,showTitle,showExcerpt,showThumbnail,exerptEl}) => {
         return <div></div>;
     }
 
-    const displayTitle = showTitle && exerptEl && exerptEl.current && ! isEmpty (post.title.rendered);
+    const displayTitle = 
+        showTitle 
+        && exerptEl 
+        && exerptEl.current 
+        && ! isUndefined (post.title);
+        // && ! isEmpty (post.title.rendered);
     const displayExcerpt = showExcerpt && exerptEl && exerptEl.current && ! isUndefined (post.excerpt_raw);
     
     const Excerpt = () => {
@@ -34,12 +39,19 @@ const Post = ({post,showTitle,showExcerpt,showThumbnail,exerptEl}) => {
                     <br />
                 </React.Fragment>
             ));
-            
+        
+        // const title = (
+        //         displayTitle
+        //         && 'undefined' !== typeof(post.title)
+        // )
+        // ?   <h3 className='excerpt-title'>{post.title.rendered}</h3>
+        // :   {}
 
         return (! displayExcerpt && ! displayTitle)
             ?   ''
             : (
             <div>
+                {/* {title} */}
                 {displayTitle &&
                     <h3 className='excerpt-title'>{post.title.rendered}</h3>
                 } 

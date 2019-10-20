@@ -1,7 +1,7 @@
 /**
  * Externals
  */
-import {useRef, useContext,useLayoutEffect} from 'react';
+import {useRef, useContext,useLayoutEffect,useState} from 'react';
 import {round,assign,isElement} from 'lodash';
 import { isUndefined } from 'util';
 
@@ -21,7 +21,7 @@ function useVertical (props) {
      */
     let 
         className,
-        isVertical,
+        // isVertical,
         group,
         svg,
         h,
@@ -35,6 +35,7 @@ function useVertical (props) {
         minRatio,
         scaleRatio;
 
+    const [isVertical,setIsVertical] = useState();
     const tagRef = useRef();
     const groupProps = useContext(GroupPropsContext);
     
@@ -126,7 +127,7 @@ function useVertical (props) {
 
     const getPositions = () => {
 
-        console.log ('ge positions: ',typeof tagRef.current );
+        console.log ('get positions: ',typeof tagRef.current );
 
         /**
          * Check Group is already set
@@ -171,7 +172,11 @@ function useVertical (props) {
             ?   attributes.className
             :   attrs.className;
 
-        isVertical = undefined !== className && className.includes('is-style-vetical');             
+        // isVertical = undefined !== className && className.includes('is-style-vetical');             
+        const newIsVertical = undefined !== className && className.includes('is-style-vetical');     
+        if (newIsVertical != isVertical) {
+            setIsVertical(newIsVertical);
+        }        
     }
 
     const getDomEls = () => {
@@ -218,42 +223,50 @@ function useVertical (props) {
     /**
      * Get initial positions
      */
-    getPositions();
+    // getPositions();
 
     /**
      * Layout Effect
      */
     useLayoutEffect (() => {
         
-        console.log ('start using useLayoutEffect groupProps:',groupProps);
 
         /**
          * Re-get positions
          */
         getPositions()
 
+        console.log (`useVertical useLayoutEffect groupProps. tagRef:${tagRef}, is vertical: ${isVertical}, isElement: ${isElement(h)}, height:${groupHeight}, svg:${withSvg}`,props,groupProps);
+
         /**
          * Make sure we have a vertical header
          */
+        // if (
+        //     ! isVertical
+        //     || ! isElement(h)
+        //     || ! groupHeight
+        // ) {
+        //     return;
+        // }
         if (
-            ! isVertical
-            || ! isElement(h)
-            || ! groupHeight
+            isVertical
+            && isElement(h)
+            && groupHeight
         ) {
-            return;
-        }
 
-        /**
-         * Align the header
-         */
-        if (withSvg) {
-            alignSvgHeading();
+            /**
+             * Align the header
+             */
+            if (withSvg) {
+                alignSvgHeading();
+            }
+            else {
+                alignHHeading();
+            }        
         }
-        else {
-            alignHHeading();
-        }        
-
     });     
+
+    console.log (`useVertical returns isVertical: ${isVertical}`);
 
     return {
         tagRef: tagRef,

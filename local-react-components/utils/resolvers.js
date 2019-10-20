@@ -33,17 +33,22 @@ const useCustomPosts = (props) => {
     const {postType} = props.attrs;
     const [sliderPosts,setSliderPosts] = useState([]);
 
+    console.log ('useCustomPosts : ', postType);
     useEffect(()=>{
-        wp[postType] = wp.registerRoute ('wp/v2','/' + postType + '/(?P<id>)');
+        if (postType) {
+            wp[postType] = wp.registerRoute ('wp/v2','/' + postType + '/(?P<id>)');
 
-        const postsObj = async () => wp[postType]()
-          .then((postsObj) => {
+            console.log ("requestiong : ",postType);
+            const postsObj = async () => wp[postType]()
+            .then((postsObj) => {
+                console.log (`useCustomPosts effect ${postType}`, postsObj);
                 setSliderPosts(postsObj);          
-        });
-        
-        postsObj();
+            });
+            
+            postsObj();
+        }
 
-    },[]);
+    },[postType]);
 
 	const sliderPostsCount = sliderPosts
 		?	sliderPosts.length
@@ -72,32 +77,40 @@ const useCustomTerms = (props) => {
 
     const {sliderPosts} = props;
 
-    if (isEmpty(taxonomy)) {
-        return props;
-    }
+    console.log ('useCustomTerms : ',props);
+
+    // if (isEmpty(taxonomy)) {
+    //     return props;
+    // }
     
     useEffect (()=>{
+        console.log ('checking isempty');
+        if (! isEmpty(taxonomy)) {
         
-        wp[taxonomy] = wp.registerRoute ('wp/v2','/' + taxonomy + '/(?P<id>)');
+            // console.log (' registering : ', 'wp/v2','/' + taxonomy + '/(?P<id>)');
+            wp[taxonomy] = wp.registerRoute ('wp/v2','/' + taxonomy + '/(?P<id>)');
 
-        if (isEmpty(sliderPosts)) {
-            return ;
+            if (isEmpty(sliderPosts)) {
+                return ;
+            }
+
+            const termsIds = getPostsTermsIds(sliderPosts,taxonomy);
+
+            console.log ('termsIds: ', termsIds);
+
+            const termsOb = async () => wp[taxonomy]()
+                .param('include',termsIds)
+                .then((termsObj) => {
+                    const termsList = getPostsTermsList(termsObj);
+                    setSliderTerms (termsList);
+            }); 
+
+            console.log("calling termsob:", termsOb);
+            termsOb();
         }
 
-        const termsIds = getPostsTermsIds(sliderPosts,taxonomy);
+    },[sliderPosts,taxonomy]);
 
-        // console.log ('post ids: ', termsIds);
-
-        const termsOb = async () => wp[taxonomy]()
-            .param('include',termsIds)
-            .then((termsObj) => {
-                const termsList = getPostsTermsList(termsObj);
-                setSliderTerms (termsList);
-        }); 
-
-        termsOb();
-
-    },[sliderPosts]);
 
     return {
         ...props,

@@ -15,6 +15,8 @@ import useVertical from './useVertical';
 export default (props) => {
 
     const attributes  = defaultAtts (props.attrs,attsSchema);
+
+    console.log ('heading index ', attributes,props);
     
     return (
         <Heading {...props} attributes={attributes}/>

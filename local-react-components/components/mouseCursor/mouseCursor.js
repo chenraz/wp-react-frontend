@@ -9,6 +9,8 @@ const MouseCursor = props => {
     
     useEffect(()=>{
 
+        console.log ('MouseCursor use effect');
+
         if (hoverX) {
             arrow = 'right' === hoverX
                 ?   rightArrow

@@ -1,0 +1,9 @@
+.dv-star-rating {
+    direction: ltr;
+    svg {
+        fill: #114d73;
+    }
+    svg.star-empty {
+        fill: none;
+    }   
+}

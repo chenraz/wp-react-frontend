@@ -14,6 +14,39 @@ import {pick,isEqual} from 'lodash';
 const GroupPropsContext =  createContext();
 GroupPropsContext.displayName = 'GroupProps';
 
+const getProps = (group,attrs) => {
+            
+    console.log ('group getProps');
+
+    const groupBounds = group.current
+        ?   group.current.getBoundingClientRect()
+        :   {};
+
+    const groupBoundsPicked = pick (
+            groupBounds,
+            ['width','height','left','right','top','bottom']
+        )                
+
+    const bounds = group.current
+        ?   {
+                ...groupBoundsPicked,
+                paddingRight: getComputedStyle(group.current).paddingRight
+            }
+        :   {};
+
+    return {
+        isFullPage: attrs.isFullPage,
+        hasVerticalHeader:attrs.hasVerticalHeader,
+        ...bounds   
+    };
+
+    // return newGroupProps;
+
+    // if (! isEqual(groupProps,newGroupProps)) {
+    //     setGroupProps(newGroupProps);
+    // }
+}
+
 /**
  * The Group Component
  * @param {*} props 
@@ -26,40 +59,23 @@ const GroupWithContext = (props) => {
 
         const attrs = props.attrs || props.attributes;
 
-        const maybeSetProps = () => {
-            
+        let newGroupProps = getProps(group,attrs);
 
-            const groupBounds = group.current
-                ?   group.current.getBoundingClientRect()
-                :   {};
+        useLayoutEffect(()=>{
+            newGroupProps = getProps(group,attrs)
 
-            const groupBoundsPicked = pick (
-                    groupBounds,
-                    ['width','height','left','right','top','bottom']
-                )                
+           console.log ('GroupWithContext useLayoutEffect');
+        })
 
-            const bounds = group.current
-                ?   {
-                        ...groupBoundsPicked,
-                        paddingRight: getComputedStyle(group.current).paddingRight
-                    }
-                :   {};
-
-            const newGroupProps = {
-                isFullPage: attrs.isFullPage,
-                hasVerticalHeader:attrs.hasVerticalHeader,
-                ...bounds   
-            };
-
-            if (! isEqual(groupProps,newGroupProps)) {
-                setGroupProps(newGroupProps);
-            }
-        }
-
-        maybeSetProps();
-
-        useLayoutEffect(maybeSetProps);
+        if (
+            ! groupProps
+            || ! isEqual(groupProps,newGroupProps)
+        ) {
+            setGroupProps(newGroupProps);
+        }  
     
+        // maybeSetProps();
+
         return(
             <GroupPropsContext.Provider {...props} value={groupProps} > 
                 <div ref={group} >

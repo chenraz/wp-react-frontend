@@ -4,7 +4,15 @@ const withSass = require('@zeit/next-sass');
 const withOptimizedImages = require('next-optimized-images');
 
 module.exports = withSass(withOptimizedImages({
-  cssModules: false
+  cssModules: false,
+  // webpack(config) {
+  //   config.module.rules.push({
+  //     test: /\.svg$/,
+  //     use: ['@svgr/webpack', 'url-loader'],
+  //   });
+
+  //   return config;
+  // }  
 }));
 
 // module.exports = withSass ({

@@ -18,6 +18,8 @@ const VerticalHeading =
         
         const {tagRef,isVertical} = useVertical(props);        
        
+        console.log (`verticalheading js. isVertical:${isVertical} `, tagRef,props);
+
         return (
             <div ref={tagRef}>
                 <Heading {...props}>

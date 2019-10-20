@@ -1,0 +1,12 @@
+.wp-block-til-card {
+    &.align-center {
+        text-align: center;
+        .card-text {
+            max-width: 600px;
+            margin-bottom: 84px;
+        }
+    }
+    .card-text {
+        margin: 0 auto 84px;
+    }
+}

@@ -14,6 +14,7 @@ import classNames from 'classnames/dedupe';
  */
 import Slides from './slides';
 import Post from '../../components/post';
+import ErrorBoundary from '../../components/Error';
 
 const SliderWrapper = ({
     className,
@@ -30,15 +31,19 @@ const SliderWrapper = ({
     ...props
 }) => {
 
+    // const Block = () => <div>block</div>;
+
     return (
-        <Slides {...props} {...{className,sliderPosts,allowedNavigation,sliderTerms, taxonomy,exerptEl,contentLayout,showExcerpt,showThumbnail,showTitle,Block}} className={classNames(className)}>
-            {'post' === contentLayout && sliderPosts &&
-                sliderPosts.map((post,i)=><Post exerptEl={exerptEl} key={i} {...{post:post,showTitle,showExcerpt,showThumbnail}}/>)
-            }
-            {'blocks' === contentLayout && sliderPosts && sliderPosts.length &&
-                sliderPosts.map((post,i)=><Block key={i} post={post} />)
-            }	
-        </Slides>
+        <ErrorBoundary>
+            <Slides {...props} {...{className,sliderPosts,allowedNavigation,sliderTerms, taxonomy,exerptEl,contentLayout,showExcerpt,showThumbnail,showTitle,Block}} className={classNames(className)}>
+                {'post' === contentLayout && sliderPosts &&
+                    sliderPosts.map((post,i)=><Post exerptEl={exerptEl} key={i} {...{post:post,showTitle,showExcerpt,showThumbnail}}/>)
+                }
+                {'blocks' === contentLayout && sliderPosts && sliderPosts.length &&
+                    sliderPosts.map((post,i)=><Block key={i} post={post} />)
+                }	
+            </Slides>
+        </ErrorBoundary>
     );
 }
 

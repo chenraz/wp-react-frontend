@@ -5,7 +5,7 @@
  /**
   * Externals
   */
-import { reduce, findKey, isUndefined } from 'lodash';
+import { reduce, findKey, isUndefined,isEmpty } from 'lodash';
 
 /**
  * Internals
@@ -17,16 +17,24 @@ import { API_NAMESPACE } from './constants';
  * @param {*} posts 
  * @param {*} taxonomy 
  */
-export const getPostsTermsIds = (posts, taxonomy) => reduce(
-    posts,
-	((r,v)=>{
-        if (! isUndefined(v[taxonomy])) {
-            r = [...r,...v[taxonomy]];
-        }
-        return r;
-    }),
-    []
-);
+export const getPostsTermsIds = (posts, taxonomy) => {
+    return (
+        posts 
+        // && ! isEmpty(posts)
+        && taxonomy
+    )
+        ?   reduce(
+                posts,
+                ((r,v)=>{
+                    if (! isUndefined(v[taxonomy])) {
+                        r = [...r,...v[taxonomy]];
+                    }
+                    return r;
+                }),
+                []
+            )
+        :   [];
+}
 
 /**
  * 
@@ -49,9 +57,16 @@ export const getPostsTermsList = (terms) => reduce(
  * @param {*} taxonomy 
  */
 export const getPostTerm = (post,taxonomy) => {
-    return post && ! isUndefined(post[taxonomy][0])
-        ?  post[taxonomy][0]
-        :  false; 
+    return (
+        (
+            post 
+            && taxonomy
+            && ! isUndefined(post[taxonomy])
+            && ! isUndefined(post[taxonomy][0])
+        )
+            ?  post[taxonomy][0]
+            :  false
+    ); 
 }
 
 /**

@@ -1,0 +1,31 @@
+.wp-block-til-review {
+    position: relative;
+    display: table;
+    width: 100%;
+
+    .review-content {
+        display: table-cell;
+        width: 70%;
+        height: 100%;
+        vertical-align: middle;
+        textarea {
+            align-self: top;
+        }
+    }
+
+    .review-details {
+        display: table-cell;
+        width: 30%;
+        text-align: center;
+        .profile-image-wrap {
+            max-width: 140px;
+            border-radius: 100%;
+            overflow: hidden;
+            box-shadow: -1px 0px rgba(0,0,0,.1), 1px 0px rgba(0,0,0,.1);
+            display: inline-block;
+        }  
+        textarea {
+            text-align: center;
+        }      
+    }
+}
