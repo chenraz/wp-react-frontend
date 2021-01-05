@@ -14,7 +14,7 @@
   "dependencies": {
     "@wordpress/block-library": "^2.4.6",
     "autoprefixer": "9.4.7",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
     "compression": "^1.7.4",
     "express": "^4.16.4",
